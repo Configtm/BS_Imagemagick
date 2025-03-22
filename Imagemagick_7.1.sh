@@ -70,8 +70,8 @@ cd $VERSION
 #########compilation  and building stage,############## 
 ##if you no need over push of cpu core then remove nproc #
 
-make -j$(( $(nproc) / 2 )) 2>&1 | tee build.log
-make install
+sudo make -j$(( $(nproc) / 2 )) 2>&1 | tee build.log
+sudo make install
 if make check  
 then
 	if $DEST/bin/magick --version >/dev/null 2>&1 
