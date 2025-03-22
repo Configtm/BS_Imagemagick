@@ -29,6 +29,9 @@ pipeline {
             steps {
                 script {
                     echo "Running compilation script..."
+                    sh 'export http_proxy=http://192.168.100.100:3128'
+                    sh 'export https_proxy=http://192.168.100.100:3128'
+                    sh 'export http_proxy=http://192.168.100.100:3128'
                     sh 'chmod +x Imagemagick_7.1.sh'
                     sh './Imagemagick_7.1.sh'
                 }
