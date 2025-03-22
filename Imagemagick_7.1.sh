@@ -4,7 +4,7 @@ set -e #exit the script when there is an error
 set -o pipefail
 
 PACKAGE=ImageMagick
-VERSION=$PACKAGE-7.1.1-45
+VERSION=$PACKAGE-7.1.1-46
 URL=https://imagemagick.org/archive/$VERSION.tar.gz
 TAR=$VERSION.tar.gz
 DEST=/opt/zoho/$VERSION
