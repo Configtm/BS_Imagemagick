@@ -40,8 +40,8 @@ pipeline {
                     echo "Uploading binary tar to JFrog Artifactory..."
                     withCredentials([usernamePassword(credentialsId: 'jfrog-token', usernameVariable: 'JFROG_USER', passwordVariable: 'JFROG_TOKEN')]) {
                         sh """
-                            jfrog rt config --url=${JFROG_URL} --user=${JFROG_USER} --apikey=${JFROG_TOKEN} --interactive=false
-                            jfrog rt u ${OUTPUT_TAR} ${JFROG_REPO}/ImageMagick-7.1.1-45.tar.gz --server-id=${JFROG_SERVER_ID}
+                            jfrog config rt --url=${JFROG_URL} --user=${JFROG_USER} --apikey=${JFROG_TOKEN} --interactive=false --server-id=${JFROG_SERVER_ID}
+                            jfrog rt upload ${OUTPUT_TAR} ${JFROG_REPO}/ImageMagick-7.1.1-45.tar.gz
                         """
                     }
                 }
