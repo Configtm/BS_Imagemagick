@@ -14,6 +14,9 @@ OUTPUT=/tmp/$VERSION.tar.gz
 mkdir -p $DEST
 
 ##Download SOURCE TAR ################
+export http_proxy=http://192.168.100.100:3128
+export https_proxy=http://192.168.100.100:3128
+export http_proxy=http://192.168.100.100:3128
 wget -O $OUTPUT $URL || { echo "Download failed! Exiting."; exit 1; } 
 
 ##### install dependencies ##########
