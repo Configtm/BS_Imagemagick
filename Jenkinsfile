@@ -40,7 +40,7 @@ pipeline {
                     echo "Uploading binary tar to JFrog Artifactory..."
                     withCredentials([usernamePassword(credentialsId: 'jfrog-token', usernameVariable: 'JFROG_USER', passwordVariable: 'JFROG_TOKEN')]) {
                         sh """
-                            jf config add ${JFROG_SERVER_ID} --url=${JFROG_URL} --user=${JFROG_USER} --password=${JFROG_TOKEN} --interactive=false
+                            jf config add ${JFROG_SERVER_ID} --url=${JFROG_URL} --user=${JFROG_USER} --password=${JFROG_TOKEN} --interactive=false --enc-password=false --basic-auth-only=true
                             jf rt upload ${OUTPUT_TAR} ${JFROG_REPO}/ImageMagick-7.1.1-45.tar.gz
                         """
                     }
