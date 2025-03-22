@@ -20,8 +20,8 @@ pipeline {
             steps {
                 script {
                     echo "Cleaning up previous build artifacts..."
-                    sh 'rm -rf /tmp/ImageMagick-7.1.1-45* || true'
-                    sh 'rm -rf /opt/zoho/ImageMagick-7.1.1-45 || true'
+                    sh 'sudo rm -rf /tmp/ImageMagick-7.1.1-45* || true'
+                    sh 'sudo rm -rf /opt/zoho/ImageMagick-7.1.1-45 || true'
                 }
             }
         }
