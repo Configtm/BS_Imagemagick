@@ -72,7 +72,7 @@ cd $VERSION
 
 sudo make -j$(( $(nproc) / 2 )) 2>&1 | tee build.log
 sudo make install
-if make check  
+if sudo make check  
 then
 	if $DEST/bin/magick --version >/dev/null 2>&1 
 	then
