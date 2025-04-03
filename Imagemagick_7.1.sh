@@ -13,8 +13,14 @@ OUTPUT=/home/patcher/$VERSION.tar.gz
 ###create Destination directory ######
 mkdir -p $DEST
 
+export http_proxy=http://192.168.100.100:3128
+export https_proxy=http://192.168.100.100:3128
+
+
 ##Download SOURCE TAR ################
 wget -O $OUTPUT $URL || { echo "Download failed! Exiting."; exit 1; } 
+
+unset http_proxy https_proxy
 
 ##### install dependencies ##########
 sudo apt install -y \
