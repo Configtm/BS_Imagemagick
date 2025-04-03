@@ -92,7 +92,7 @@ fi
 
 ############ tar the binary package ##############
 
-tar -czvf $VERSION.tar.gz -C $DEST . 
+tar -czvf "$OUTPUT" -C "$DEST" .
 
 echo " compilation is completed output tar saved --> $OUTPUT "
 
