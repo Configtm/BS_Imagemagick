@@ -2,8 +2,8 @@ pipeline {
     agent any
     environment {
         GITHUB_REPO = 'https://github.com/Configtm/BS_Imagemagick.git' 
-        VERSION = '7.1.1-46'
-        JFROG_REPO = 'http://10.65.150.52:8081/artifactory/demo/ImageMagick-binaries/ImageMagick-7.1.1-46.tar.gz'
+        VERSION = '7.1.1-47'
+        JFROG_REPO = 'http://10.65.150.52:8081/artifactory/demo/ImageMagick-binaries/ImageMagick-7.1.1-47.tar.gz'
     }
     stages {
         stage('Checkout from GitHub') {
