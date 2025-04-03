@@ -8,4 +8,4 @@ services:
       - ./container_data:/ # Persist everything, including logs and reports
     stdin_open: true
     tty: true
-    command: ["/bin/bash", "-c", "./startup.sh"]
+    command: ["/bin/bash", "-c", "/Test/startup.sh"]
