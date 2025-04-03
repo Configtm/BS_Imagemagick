@@ -37,7 +37,7 @@ pipeline {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'jfrog', usernameVariable: 'ARTIFACTORY_USERNAME', passwordVariable: 'ARTIFACTORY_APIKEY')]) {
                         sh """
-                            curl -u $ARTIFACTORY_USERNAME:$ARTIFACTORY_APIKEY -X PUT -T /home/patcher/ImageMagick-$VERSION.tar.gz "JFROG_REPO"
+                            curl -u "$ARTIFACTORY_USERNAME:$ARTIFACTORY_APIKEY" -X PUT -T /home/patcher/ImageMagick-${VERSION}.tar.gz "$JFROG_REPO"
                         """
                     }
                 }
