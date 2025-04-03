@@ -35,6 +35,7 @@ sudo apt install -y \
 cd /home/patcher
 
 tar -xzvf $TAR
+rm -rf $TAR
 
 cd $VERSION
 
