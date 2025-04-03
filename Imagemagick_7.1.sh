@@ -8,15 +8,12 @@ VERSION=$PACKAGE-7.1.1-46
 URL=https://imagemagick.org/archive/$VERSION.tar.gz
 TAR=$VERSION.tar.gz
 DEST=/opt/zoho/$VERSION
-OUTPUT=/tmp/$VERSION.tar.gz
+OUTPUT=/home/patcher/$VERSION.tar.gz
 
 ###create Destination directory ######
 mkdir -p $DEST
 
 ##Download SOURCE TAR ################
-#export http_proxy=http://192.168.100.100:3128
-#export https_proxy=http://192.168.100.100:3128
-#export http_proxy=http://192.168.100.100:3128
 wget -O $OUTPUT $URL || { echo "Download failed! Exiting."; exit 1; } 
 
 ##### install dependencies ##########
@@ -29,7 +26,7 @@ sudo apt install -y \
   
   ###### EXTRACT the source ############
 
-cd /tmp
+cd /home/patcher
 
 tar -xzvf $TAR
 
@@ -70,9 +67,9 @@ cd $VERSION
 #########compilation  and building stage,############## 
 ##if you no need over push of cpu core then remove nproc #
 
-sudo make -j$(( $(nproc) / 2 )) 2>&1 | tee build.log
-sudo make install
-if sudo make check  
+make -j$(( $(nproc) / 2 )) 2>&1 | tee build.log
+make install
+if make check  
 then
 	if $DEST/bin/magick --version >/dev/null 2>&1 
 	then
@@ -91,3 +88,6 @@ fi
 tar -czvf $VERSION.tar.gz -C $DEST . 
 
 echo " compilation is completed output tar saved --> $OUTPUT "
+
+
+
