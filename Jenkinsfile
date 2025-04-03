@@ -26,9 +26,22 @@ pipeline {
         stage('Compile ImageMagick') {
             steps {
                 script {
+                    echo "Setting proxy..."
+                    sh '''
+                        export http_proxy="http://192.168.100.100:3128/"
+                        export https_proxy="http://192.168.100.100:3128/"
+                        export no_proxy="localhost,127.0.0.1"
+                    '''
                     echo "Running compilation script..."
                     sh 'chmod +x Imagemagick_7.1.sh'
                     sh './Imagemagick_7.1.sh'
+
+                    echo "Unsetting proxy..."
+                    sh '''
+                        unset http_proxy
+                        unset https_proxy
+                        unset no_proxy
+                    '''
                 }
             }
         }
