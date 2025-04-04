@@ -56,7 +56,7 @@ pipeline {
         stage('Docker compose') {
             agent { label 'Docker-agent' }
             steps {
-                #cleanup stage 
+                //cleanup stage 
                 sh "rm -rf BS_Imagemagick container_test"
                 sh "git clone $GITHUB_REPO"
                 sh "mkdir -p ./container_test"
