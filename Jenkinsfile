@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent { label 'Build-In Node' }
     environment {
         GITHUB_REPO = 'https://github.com/Configtm/BS_Imagemagick.git' 
         VERSION = '7.1.1-47'
@@ -50,7 +50,7 @@ pipeline {
     agent { label 'Docker-agent' }
 
     stages {
-        stage('Check Docker Access') {
+        stage('Docker compose') {
             steps {
                 sh "git clone $GITHUB_REPO"
                 sh "mkdir -p ./container_test"
