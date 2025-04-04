@@ -5,7 +5,8 @@ services:
     build: .
     container_name: imagemagick_test
     volumes:
-      - ./container_opt:/opt # Persist everything, including logs and reports
+      - ./container_opt:/opt  # Persist logs, reports, or generated output
     stdin_open: true
     tty: true
+    working_dir: /app        # So ./startup.sh is found
     command: ["/bin/bash", "-c", "./startup.sh"]
