@@ -58,7 +58,7 @@ pipeline {
             steps {
                 sh "git clone $GITHUB_REPO"
                 sh "mkdir -p ./container_test"
-                sh "docker-compose up --build -d"
+                sh "docker-compose up --build"
             }
         }
     }
