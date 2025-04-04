@@ -9,7 +9,7 @@ pipeline {
 
     stages {
         stage('Checkout from GitHub') {
-            agent { label 'Build-In Node' }
+            agent { label 'Build-In_Node' }
             steps {
                 script {
                     echo "Cloning GitHub repo..."
@@ -19,7 +19,7 @@ pipeline {
         }
 
         stage('Clean Up') {
-            agent { label 'Build-In Node' }
+            agent { label 'Build-In_Node' }
             steps {
                 script {
                     echo "Cleaning up previous build artifacts..."
@@ -30,7 +30,7 @@ pipeline {
         }
 
         stage('Compile ImageMagick') {
-            agent { label 'Build-In Node' }
+            agent { label 'Build-In_Node' }
             steps {
                 script {
                     echo "Running compilation script..."
@@ -41,7 +41,7 @@ pipeline {
         }
 
         stage('Upload to JFrog') {
-            agent { label 'Build-In Node' }
+            agent { label 'Build-In_Node' }
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'jfrog', usernameVariable: 'ARTIFACTORY_USERNAME', passwordVariable: 'ARTIFACTORY_APIKEY')]) {
