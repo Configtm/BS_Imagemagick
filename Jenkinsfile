@@ -57,7 +57,7 @@ pipeline {
             agent { label 'Docker-agent' }
             steps {
                 #cleanup stage 
-                sh "sudo rm -rf /home/jenkins/agent/workspace/*"
+                sh "sudo rm -rf /home/jenkins/agent/workspace/IMAGEMAGICK_7/*"
                 sh "git clone $GITHUB_REPO"
                 sh "mkdir -p ./container_test"
                 sh "docker-compose up --build"
