@@ -56,6 +56,8 @@ pipeline {
         stage('Docker compose') {
             agent { label 'Docker-agent' }
             steps {
+                #cleanup stage 
+                sh "sudo rm -rf /home/jenkins/agent/workspace/*"
                 sh "git clone $GITHUB_REPO"
                 sh "mkdir -p ./container_test"
                 sh "docker-compose up --build"
