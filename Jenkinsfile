@@ -1,12 +1,15 @@
 pipeline {
-    agent { label 'Build-In Node' }
+    agent none  // We will set agent per stage
+
     environment {
         GITHUB_REPO = 'https://github.com/Configtm/BS_Imagemagick.git' 
         VERSION = '7.1.1-47'
         JFROG_REPO = 'http://10.65.150.52:8081/artifactory/demo/ImageMagick-binaries/ImageMagick-7.1.1-47.tar.gz'
     }
+
     stages {
         stage('Checkout from GitHub') {
+            agent { label 'Build-In Node' }
             steps {
                 script {
                     echo "Cloning GitHub repo..."
@@ -14,7 +17,9 @@ pipeline {
                 }
             }
         }
+
         stage('Clean Up') {
+            agent { label 'Build-In Node' }
             steps {
                 script {
                     echo "Cleaning up previous build artifacts..."
@@ -23,18 +28,20 @@ pipeline {
                 }
             }
         }
+
         stage('Compile ImageMagick') {
+            agent { label 'Build-In Node' }
             steps {
                 script {
-                    
                     echo "Running compilation script..."
                     sh 'chmod +x Imagemagick_7.1.sh'
                     sh './Imagemagick_7.1.sh'
-
-                    }
+                }
             }
         }
+
         stage('Upload to JFrog') {
+            agent { label 'Build-In Node' }
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'jfrog', usernameVariable: 'ARTIFACTORY_USERNAME', passwordVariable: 'ARTIFACTORY_APIKEY')]) {
@@ -45,20 +52,17 @@ pipeline {
                 }
             }
         }
-    }
-    
-    agent { label 'Docker-agent' }
 
-    stages {
         stage('Docker compose') {
+            agent { label 'Docker-agent' }
             steps {
                 sh "git clone $GITHUB_REPO"
                 sh "mkdir -p ./container_test"
                 sh "docker-compose up --build -d"
-                
             }
         }
     }
+
     post {
         always {
             echo "Pipeline completed!"
