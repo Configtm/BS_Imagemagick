@@ -3,8 +3,9 @@ FROM debian:latest
 ENV http_proxy="http://192.168.100.100:3128/"
 ENV https_proxy="http://192.168.100.100:3128/"
 ENV no_proxy="localhost,127.0.0.1"
-COPY startup.sh /Test
 
+
+#COPY startup.sh /Test
 
 #RUN apt update && apt install -y curl libssl-dev libffi-dev
 
