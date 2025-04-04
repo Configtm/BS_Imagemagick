@@ -46,6 +46,19 @@ pipeline {
             }
         }
     }
+    
+    agent { label 'Docker-agent' }
+
+    stages {
+        stage('Check Docker Access') {
+            steps {
+                sh "git clone $GITHUB_REPO"
+                sh "mkdir -p ./container_test"
+                sh "docker-compose up --build -d"
+                
+            }
+        }
+    }
     post {
         always {
             echo "Pipeline completed!"
