@@ -15,10 +15,15 @@ pipeline {
                     echo "Cloning GitHub repo..."
                     withCredentials([usernamePassword(credentialsId: 'github', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
                         sh """
-                            git config --global credential.helper store
-                            echo "https://${GIT_USER}:${GIT_PASS}@github.com" > ~/.git-credentials
-                            git clone ${GITHUB_REPO}
-                        """
+                                git config --global credential.helper store
+                                echo "https://${GIT_USER}:${GIT_PASS}@github.com" > ~/.git-credentials
+
+                                git config --global http.proxy http://192.168.100.100:3128
+                                git config --global https.proxy http://192.168.100.100:3128
+
+                                git clone ${GITHUB_REPO}
+                            """
+
                     }
                 }
             }
