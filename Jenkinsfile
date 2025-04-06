@@ -59,24 +59,18 @@ pipeline {
                  
                 withCredentials([usernamePassword(credentialsId: 'jfrog', usernameVariable: 'JFROG_USER', passwordVariable: 'JFROG_APIKEY')]) {
             sh '''
-                #Clean previous directories
+                ##### Clean previous directories
                 rm -rf BS_Imagemagick container_test
-
-                # Remove old container if running
-                #docker rm imagemagick_test || true
-                
-                # Clone fresh repo
                 git clone $GITHUB_REPO
-                
-                # Create folder for volume mount
                 mkdir -p ./container_test
 
-                # Export secrets to .env for docker-compose
+                ###### Export secrets to .env for docker-compose
                 echo "JFROG_USER=$JFROG_USER" > .env
                 echo "JFROG_APIKEY=$JFROG_APIKEY" >> .env
 
-                # Run docker-compose
+                ###### Run docker-compose
                 docker-compose up --build
+                docker rm imagemagick_test
             '''
             }
         }
