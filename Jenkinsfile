@@ -81,13 +81,24 @@ pipeline {
                             git clone https://github.com/Configtm/BS_Imagemagick.git
                             mkdir -p ./container_test
 
-                             echo "JFROG_USER=${JFROG_USER}" > .env
-                             echo "JFROG_APIKEY=${JFROG_APIKEY}" >> .env
+                            echo "JFROG_USER=${JFROG_USER}" > .env
+                            echo "JFROG_APIKEY=${JFROG_APIKEY}" >> .env
 
                             docker-compose up --build
                             docker rm imagemagick_test 
                         '''
                     }
+                }
+            }
+        }
+
+        stage('Archive Packaging Test Report') {
+            agent { label 'Docker-agent' }
+            steps {
+                script {
+                    echo "Archiving ImageMagick test report..."
+                    sh 'cp container_test/test_report.txt ./test_report.txt || true'
+                    archiveArtifacts artifacts: 'test_report.txt', allowEmptyArchive: true
                 }
             }
         }
