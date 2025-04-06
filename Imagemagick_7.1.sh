@@ -87,7 +87,7 @@ then
 	
 	fi
 else
-	echo " make Test failed "
+	echo " make check failed "
 fi
 
 ############ tar the binary package ##############
