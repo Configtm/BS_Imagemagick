@@ -10,3 +10,6 @@ services:
     tty: true
     working_dir: /app        # So ./startup.sh is found
     command: ["/bin/bash", "-c", "./startup.sh"]
+    environment:
+      JFROG_USER: ${JFROG_USER}
+      JFROG_APIKEY: ${JFROG_APIKEY}
