@@ -32,9 +32,7 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'github', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
                         sh '''
                             git config --global credential.helper store
-                            cat <<EOF > ~/.git-credentials
-https://$GIT_USER:$GIT_PASS@github.com
-EOF
+                            echo "https://${GIT_USER}:${GIT_PASS}@github.com" > ~/.git-credentials
 
                             git config --global http.proxy http://192.168.100.100:3128
                             git config --global https.proxy http://192.168.100.100:3128
@@ -83,10 +81,8 @@ EOF
                             git clone https://github.com/Configtm/BS_Imagemagick.git
                             mkdir -p ./container_test
 
-                            cat <<EOF > .env
-JFROG_USER=$JFROG_USER
-JFROG_APIKEY=$JFROG_APIKEY
-EOF
+                             echo "JFROG_USER=${JFROG_USER}" > .env
+                             echo "JFROG_APIKEY=${JFROG_APIKEY}" >> .env
 
                             docker-compose up --build
                             docker rm imagemagick_test 
