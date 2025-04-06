@@ -58,6 +58,7 @@ pipeline {
             steps {
                 //cleanup stage 
                 sh "rm -rf BS_Imagemagick container_test"
+                sh "docker rm imagemagick_container"
                 sh "git clone $GITHUB_REPO"
                 sh "mkdir -p ./container_test"
                 sh "docker-compose up --build"
