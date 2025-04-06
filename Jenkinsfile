@@ -79,6 +79,7 @@ pipeline {
                         sh '''
                             rm -rf BS_Imagemagick container_opt 
                             git clone https://github.com/Configtm/BS_Imagemagick.git
+                            mkdir -p ./container_opt
                             
                             echo "JFROG_USER=${JFROG_USER}" > .env
                             echo "JFROG_APIKEY=${JFROG_APIKEY}" >> .env
