@@ -13,10 +13,10 @@ pipeline {
             steps {
                 script {
                     echo "Cloning GitHub repo..."
-                    withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
+                    withCredentials([usernamePassword(credentialsId: 'github', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
                         sh """
                             git config --global credential.helper store
-                            echo "https://${GITHUB_TOKEN}:x-oauth-basic@github.com" > ~/.git-credentials
+                            echo "https://${GIT_USER}:${GIT_PASS}@github.com" > ~/.git-credentials
                             git clone ${GITHUB_REPO}
                         """
                     }
