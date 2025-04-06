@@ -2,24 +2,24 @@ pipeline {
     agent none
 
     environment {
-        GITHUB_REPO = 'https://github.com/Configtm/BS_Imagemagick.git' 
-        VERSION = '7.1.1-47'
-        JFROG_REPO = 'http://10.65.150.52:8081/artifactory/demo/ImageMagick-binaries/ImageMagick-7.1.1-47.tar.gz'
-        PROXY = 'http://192.168.100.100:3128'
+        GITHUB_REPO = 'https://github.com/Configtm/BS_Imagemagick.git'
+    }
+
+    parameters {
+        string(name: 'VERSION', defaultValue: '7.1.1-47', description: 'Enter ImageMagick version')
+        string(name: 'JFROG_REPO', defaultValue: 'http://10.65.150.52:8081/artifactory/demo/ImageMagick-binaries/ImageMagick-7.1.1-47.tar.gz', description: 'JFrog upload path')
     }
 
     stages {
-
         stage('Clean Up') {
             agent { label 'Build-In_Node' }
             steps {
                 script {
                     echo "Cleaning up previous build artifacts..."
-                    sh """
+                    sh '''
                         sudo rm -rf /home/patcher/ImageMagick-${VERSION}* || true
                         sudo rm -rf /opt/zoho/ImageMagick-${VERSION} || true
-                        rm -rf BS_Imagemagick || true
-                    """
+                    '''
                 }
             }
         }
@@ -28,19 +28,20 @@ pipeline {
             agent { label 'Build-In_Node' }
             steps {
                 script {
-                    echo "Cloning GitHub repo..."
+                    echo "Cloning GitHub repo securely..."
                     withCredentials([usernamePassword(credentialsId: 'github', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
-                        withEnv(["GIT_USER=${GIT_USER}", "GIT_PASS=${GIT_PASS}"]) {
-                            sh '''
-                                git config --global credential.helper store
-                                echo "https://${GIT_USER}:${GIT_PASS}@github.com" > ~/.git-credentials
+                        sh '''
+                            git config --global credential.helper store
+                            cat <<EOF > ~/.git-credentials
+https://$GIT_USER:$GIT_PASS@github.com
+EOF
 
-                                git config --global http.proxy "$PROXY"
-                                git config --global https.proxy "$PROXY"
+                            git config --global http.proxy http://192.168.100.100:3128
+                            git config --global https.proxy http://192.168.100.100:3128
 
-                                git clone $GITHUB_REPO
-                            '''
-                        }
+                            rm -rf BS_Imagemagick || true
+                            git clone https://github.com/Configtm/BS_Imagemagick.git
+                        '''
                     }
                 }
             }
@@ -51,8 +52,10 @@ pipeline {
             steps {
                 script {
                     echo "Running compilation script..."
-                    sh "chmod +x Imagemagick_7.1.sh"
-                    sh "./Imagemagick_7.1.sh"
+                    sh '''
+                        chmod +x BS_Imagemagick/Imagemagick_7.1.sh
+                        ./BS_Imagemagick/Imagemagick_7.1.sh
+                    '''
                 }
             }
         }
@@ -62,9 +65,9 @@ pipeline {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'jfrog', usernameVariable: 'JFROG_USER', passwordVariable: 'JFROG_APIKEY')]) {
-                        sh """
-                            curl -u "${JFROG_USER}:${JFROG_APIKEY}" -X PUT -T /home/patcher/ImageMagick-${VERSION}.tar.gz "${JFROG_REPO}"
-                        """
+                        sh '''
+                            curl -u "$JFROG_USER:$JFROG_APIKEY" -X PUT -T /home/patcher/ImageMagick-${VERSION}.tar.gz "$JFROG_REPO"
+                        '''
                     }
                 }
             }
@@ -75,19 +78,19 @@ pipeline {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'jfrog', usernameVariable: 'JFROG_USER', passwordVariable: 'JFROG_APIKEY')]) {
-                        withEnv(["JFROG_USER=${JFROG_USER}", "JFROG_APIKEY=${JFROG_APIKEY}"]) {
-                            sh '''
-                                rm -rf BS_Imagemagick container_test
-                                git clone $GITHUB_REPO
-                                mkdir -p ./container_test
+                        sh '''
+                            rm -rf BS_Imagemagick container_test || true
+                            git clone https://github.com/Configtm/BS_Imagemagick.git
+                            mkdir -p ./container_test
 
-                                echo "JFROG_USER=$JFROG_USER" > .env
-                                echo "JFROG_APIKEY=$JFROG_APIKEY" >> .env
+                            cat <<EOF > .env
+JFROG_USER=$JFROG_USER
+JFROG_APIKEY=$JFROG_APIKEY
+EOF
 
-                                docker-compose up --build
-                                docker rm imagemagick_test
-                            '''
-                        }
+                            docker-compose up --build
+                            docker rm imagemagick_test || true
+                        '''
                     }
                 }
             }
