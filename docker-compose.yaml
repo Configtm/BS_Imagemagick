@@ -9,7 +9,7 @@ services:
     stdin_open: true
     tty: true
     working_dir: /app        # So ./startup.sh is found
-    command: ["/bin/bash", "-c", "./app/startup.sh && ./app//test_imagemagick.sh"]
+    command: ["/bin/bash", "-c", "./startup.sh && ./test_imagemagick.sh"]
     environment:
       JFROG_USER: ${JFROG_USER}
       JFROG_APIKEY: ${JFROG_APIKEY}
