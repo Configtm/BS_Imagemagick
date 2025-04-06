@@ -17,8 +17,8 @@ pipeline {
                 script {
                     echo "Cleaning up previous build artifacts..."
                     sh '''
-                        sudo rm -rf /home/patcher/ImageMagick-${VERSION}* || true
-                        sudo rm -rf /opt/zoho/ImageMagick-${VERSION} || true
+                        sudo rm -rf /home/patcher/ImageMagick-${VERSION}* 
+                        sudo rm -rf /opt/zoho/ImageMagick-${VERSION} 
                     '''
                 }
             }
@@ -39,7 +39,7 @@ EOF
                             git config --global http.proxy http://192.168.100.100:3128
                             git config --global https.proxy http://192.168.100.100:3128
 
-                            rm -rf BS_Imagemagick || true
+                            rm -rf BS_Imagemagick 
                             git clone https://github.com/Configtm/BS_Imagemagick.git
                         '''
                     }
@@ -79,7 +79,7 @@ EOF
                 script {
                     withCredentials([usernamePassword(credentialsId: 'jfrog', usernameVariable: 'JFROG_USER', passwordVariable: 'JFROG_APIKEY')]) {
                         sh '''
-                            rm -rf BS_Imagemagick container_test || true
+                            rm -rf BS_Imagemagick container_test 
                             git clone https://github.com/Configtm/BS_Imagemagick.git
                             mkdir -p ./container_test
 
@@ -89,7 +89,7 @@ JFROG_APIKEY=$JFROG_APIKEY
 EOF
 
                             docker-compose up --build
-                            docker rm imagemagick_test || true
+                            docker rm imagemagick_test 
                         '''
                     }
                 }
