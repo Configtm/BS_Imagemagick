@@ -8,7 +8,7 @@ ENV no_proxy="localhost,127.0.0.1"
 WORKDIR /app
 
 # Copy startup.sh from host into container
-COPY startup.sh test_imagemagick.sh .
+COPY startup.sh test_imagemagick.sh /app/
 
 # Optional: Install anything ImageMagick or shell depends on
 RUN apt update && apt install -y bash
