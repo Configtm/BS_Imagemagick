@@ -8,13 +8,13 @@ ENV no_proxy="localhost,127.0.0.1"
 WORKDIR /app
 
 # Copy startup.sh from host into container
-COPY startup.sh .
+COPY startup.sh test_imagemagick.sh .
 
 # Optional: Install anything ImageMagick or shell depends on
 RUN apt update && apt install -y bash
 
 # Make sure the script is executable
-RUN chmod +x startup.sh
+RUN chmod +x startup.sh /app/test_imagemagick.sh
 
 # Default command if not overridden by docker-compose
-CMD ["./startup.sh"]
+CMD ["./startup.sh ./test_imagemagick.sh"]
