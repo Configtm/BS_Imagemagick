@@ -56,12 +56,28 @@ pipeline {
         stage('Docker compose') {
             agent { label 'Docker-agent' }
             steps {
-                //cleanup stage 
-                sh "rm -rf BS_Imagemagick container_test"
-                sh "docker rm imagemagick_test"
-                sh "git clone $GITHUB_REPO"
-                sh "mkdir -p ./container_test"
-                sh "docker-compose up --build"
+                 
+                withCredentials([usernamePassword(credentialsId: 'jfrog', usernameVariable: 'JFROG_USER', passwordVariable: 'JFROG_APIKEY')]) {
+            sh '''
+                #Clean previous directories
+                rm -rf BS_Imagemagick container_test
+
+                # Remove old container if running
+                #docker rm imagemagick_test || true
+                
+                # Clone fresh repo
+                git clone $GITHUB_REPO
+                
+                # Create folder for volume mount
+                mkdir -p ./container_test
+
+                # Export secrets to .env for docker-compose
+                echo "JFROG_USER=$JFROG_USER" > .env
+                echo "JFROG_APIKEY=$JFROG_APIKEY" >> .env
+
+                # Run docker-compose
+                docker-compose up --build
+            '''
             }
         }
     }
