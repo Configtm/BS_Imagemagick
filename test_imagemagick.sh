@@ -4,6 +4,8 @@ set -o pipefail
 
 REPORT_FILE="/app/test_report.txt"
 
+MAGICK_BIN="/opt/zoho/ImageMagick-7.1.1-47/bin/magick"
+
 {
     echo "ImageMagick Packaging Test Report"
     echo "Generated on: $(date)"
@@ -12,8 +14,8 @@ REPORT_FILE="/app/test_report.txt"
     echo ""
     echo "Testing image conversion..."
 
-    convert -size 100x100 xc:red /tmp/red.png
-    convert /tmp/red.png /tmp/red.jpg
+    $MAGICK_BIN convert -size 100x100 xc:red /tmp/red.png
+    $MAGICK_BIN convert /tmp/red.png /tmp/red.jpg
 
     if [[ -f /tmp/red.jpg ]]; then
         echo "Image conversion test passed"
