@@ -77,10 +77,9 @@ pipeline {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'jfrog', usernameVariable: 'JFROG_USER', passwordVariable: 'JFROG_APIKEY')]) {
                         sh '''
-                            rm -rf BS_Imagemagick container_test 
+                            rm -rf BS_Imagemagick container_opt 
                             git clone https://github.com/Configtm/BS_Imagemagick.git
-                            mkdir -p ./container_test
-
+                            
                             echo "JFROG_USER=${JFROG_USER}" > .env
                             echo "JFROG_APIKEY=${JFROG_APIKEY}" >> .env
 
@@ -97,7 +96,7 @@ pipeline {
             steps {
                 script {
                     echo "Archiving ImageMagick test report..."
-                    sh 'cp container_test/opt/test_report.txt ./test_report.txt || true'
+                    sh 'cp container_opt/test_report.txt ./test_report.txt || true'
                     archiveArtifacts artifacts: 'test_report.txt', allowEmptyArchive: true
                 }
             }
