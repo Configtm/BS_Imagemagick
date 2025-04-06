@@ -22,7 +22,14 @@ apt update && apt install -y curl libssl-dev libffi-dev \
 
 mkdir -p /opt/zoho/ImageMagick-7.1.1-47
 
-curl -uadmin:cmVmdGtuOjAxOjE3NzUwNjE4ODA6M0hHcXJ6bGdxM01rc2tzaUZYOU1OSzdVam0z -L -O "http://10.65.150.52:8082/artifactory/demo/ImageMagick-binaries/ImageMagick-7.1.1-47.tar.gz"
+# Check if env vars are passed
+if [[ -z "$JFROG_USER" || -z "$JFROG_APIKEY" ]]; then
+  echo "Missing JFROG_USER or JFROG_APIKEY. Exiting."
+  exit 1
+fi
+
+# Download from JFrog securely
+curl -u"$JFROG_USER:$JFROG_APIKEY" -L -O "http://10.65.150.52:8082/artifactory/demo/ImageMagick-binaries/ImageMagick-7.1.1-47.tar.gz"
 
 tar -xzvf ImageMagick-7.1.1-47.tar.gz -C /opt/zoho/ImageMagick-7.1.1-47/
 
