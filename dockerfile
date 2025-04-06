@@ -17,4 +17,4 @@ RUN apt update && apt install -y bash
 RUN chmod +x startup.sh /app/test_imagemagick.sh
 
 # Default command if not overridden by docker-compose
-CMD ["./startup.sh ./test_imagemagick.sh"]
+CMD ["./app/startup.sh ./app/test_imagemagick.sh"]
