@@ -1,4 +1,4 @@
-FROM debian:latest
+FROM debian:bookworm
 
 ENV http_proxy="http://192.168.100.100:3128/"
 ENV https_proxy="http://192.168.100.100:3128/"
