@@ -44,9 +44,9 @@ pipeline {
             agent { label 'Build-In_Node' }
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'jfrog', usernameVariable: 'ARTIFACTORY_USERNAME', passwordVariable: 'ARTIFACTORY_APIKEY')]) {
+                    withCredentials([usernamePassword(credentialsId: 'jfrog', usernameVariable: 'JFROG_USER', passwordVariable: 'JFROG_APIKEY')]) {
                         sh """
-                            curl -u "$ARTIFACTORY_USERNAME:$ARTIFACTORY_APIKEY" -X PUT -T /home/patcher/ImageMagick-${VERSION}.tar.gz "$JFROG_REPO"
+                            curl -u "$JFROG_USER:$JFROG_APIKEY" -X PUT -T /home/patcher/ImageMagick-${VERSION}.tar.gz "$JFROG_REPO"
                         """
                     }
                 }
