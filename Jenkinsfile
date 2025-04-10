@@ -17,6 +17,7 @@ pipeline {
                 script {
                     echo "Cleaning up previous build artifacts..."
                     sh '''
+                        whoami
                         sudo rm -rf /home/patcher/ImageMagick-${VERSION}* 
                         sudo rm -rf /opt/zoho/ImageMagick-${VERSION} 
                     '''
