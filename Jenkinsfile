@@ -98,7 +98,6 @@ pipeline {
             steps {
                 script {
                     echo "Archiving ImageMagick test report..."
-                    sh 'cp container_opt/test_report.txt ./test_report.txt '
                     archiveArtifacts artifacts: 'test_report.txt', allowEmptyArchive: true
                 }
             }
