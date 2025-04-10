@@ -12,7 +12,18 @@ MAGICK_BIN="/opt/zoho/ImageMagick-7.1.1-47/bin/magick"
     echo "Generated on: $(date)"
     echo "--------------------------------------"
     $MAGICK_BIN --version
-    echo ""
+    echo " Installed modules "
+
+    $MAGICK_BIN --version | grep Delegates
+
+
+    if ldd $MAGICK_BIN | grep "not found"
+        then
+            echo "ImageMagick dependencies missing"
+	exit 1
+    else
+        echo "ImageMagick module & dependencies installed successfully"
+    fi
 
     echo "Testing image conversion..."
     $MAGICK_BIN -size 100x100 xc:red /tmp/red.png
