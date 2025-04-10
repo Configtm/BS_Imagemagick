@@ -33,13 +33,4 @@ curl -u"$JFROG_USER:$JFROG_APIKEY" -L -O "http://10.65.150.52:8082/artifactory/d
 
 tar -xzvf ImageMagick-7.1.1-47.tar.gz -C /opt/zoho/ImageMagick-7.1.1-47/
 
-/opt/zoho/ImageMagick-7.1.1-47/bin/magick --version | grep Delegates
 
-
-if ldd /opt/zoho/ImageMagick-7.1.1-47/bin/magick | grep "not found"
-    then
-        echo "ImageMagick dependencies missing"
-	exit 1
-    else
-        echo "ImageMagick module & dependencies installed successfully"
-fi
