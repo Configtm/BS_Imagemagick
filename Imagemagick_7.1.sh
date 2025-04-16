@@ -10,7 +10,7 @@ TAR=$VERSION.tar.gz
 DEST=/opt/zoho/$VERSION
 OUTPUT=/home/patcher/$VERSION.tar.gz
 
-###create Destination directory ######
+####create Destination directory ######
 mkdir -p $DEST
 
 export http_proxy=http://192.168.100.100:3128
