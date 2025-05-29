@@ -29,7 +29,7 @@ if [[ -z "$JFROG_USER" || -z "$JFROG_APIKEY" ]]; then
 fi
 
 # Download from JFrog securely
-curl -u "$JFROG_USER:$JFROG_APIKEY" -L -O " http://10.65.150.52:8082/artifactory/demo/ImageMagick-binaries/ImageMagick-7.1.1-47.tar.gz"
+curl -u "$JFROG_USER:$JFROG_APIKEY" -L -O "http://10.65.150.52:8082/artifactory/demo/ImageMagick-binaries/ImageMagick-7.1.1-47.tar.gz"
 
 tar -xzvf ImageMagick-7.1.1-47.tar.gz -C /opt/zoho/ImageMagick-7.1.1-47/
 
